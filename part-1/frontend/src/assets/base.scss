@@ -1,0 +1,86 @@
+/* color palette */
+:root {
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray-00: #fafafa;
+  --color-gray-01: #e7e7e7;
+  --color-gray-10: #9c9c9c;
+  --color-gray-20: #8e8e8e;
+  --color-gray-30: #252525;
+
+  --color-purple: #4901f9;
+  --color-green: #00a061;
+  --color-pink: #e797b3;
+  --color-red: #f70045;
+  --color-yellow: #fdcf00;
+}
+
+/* semantic color variables */
+:root {
+  --color-backgroud: var(--color-white);
+  --color-backgroud-secondary: var(--color-gray-00);
+  --color-text: var(--color-gray-20);
+  --color-text-invert: var(--color-white);
+  --color-text-fade: var(--color-gray-10);
+  --color-text-bold: var(--color-gray-30);
+  --color-button-primary: var(--color-purple);
+  --color-button-secondary: var(--color-green);
+  --color-button-tertiary: var(--color-yellow);
+  --color-button-danger: var(--color-red);
+  --color-border: var(--color-gray-01);
+
+  --section-gap: 160px;
+}
+
+/* dark theme semantic colors variables */
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     --color-background: var(--vt-c-black);
+//     --color-background-soft: var(--vt-c-black-soft);
+//     --color-background-mute: var(--vt-c-black-mute);
+
+//     --color-border: var(--vt-c-divider-dark-2);
+//     --color-border-hover: var(--vt-c-divider-dark-1);
+
+//     --color-heading: var(--vt-c-text-dark-1);
+//     --color-text: var(--vt-c-text-dark-2);
+//   }
+// }
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition: color 0.5s, background-color 0.5s;
+  line-height: 1.6;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+p {
+  color: var(--color-text);
+}
+
+h1,
+h2 {
+  color: var(--color-text-bold);
+}
