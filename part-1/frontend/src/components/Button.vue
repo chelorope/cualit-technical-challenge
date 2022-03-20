@@ -9,6 +9,9 @@ defineProps({
     default: "primary",
     validator: (value) => ["primary", "secondary", "tertiary"].includes(value),
   },
+  inverted: {
+    type: Boolean,
+  },
 });
 </script>
 
@@ -20,12 +23,22 @@ defineProps({
 
 <style scoped lang="scss">
 .Button {
-  background-color: var(--color-button-primary);
-  padding: 0.4rem 0.6rem;
-  color: var(--color-text-invert);
-  border: none;
+  border: 1px solid var(--color-transparent);
+  padding: 0.5rem 0.6rem;
   border-radius: var(--border-radius);
   cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+
+  &.primary {
+    background-color: var(--color-button-primary);
+    color: var(--color-text-invert);
+    border-color: var(--color-purple);
+
+    &:hover {
+      background-color: var(--color-transparent);
+      color: var(--color-purple);
+    }
+  }
 
   &.secondary {
     background-color: var(--color-button-secondary);

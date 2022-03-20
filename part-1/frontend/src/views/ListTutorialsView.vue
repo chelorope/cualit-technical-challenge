@@ -1,19 +1,31 @@
 <script setup>
-import Button from "@/components/Button.vue";
+import { ref } from "vue";
 import Card from "@/components/Card.vue";
 import LinkList from "@/components/LinkList.vue";
+import SearchBar from "@/components/SearchBar.vue";
 import useSWRV from "swrv";
-const { data, error } = useSWRV("http://localhost:3030/tutorials");
+
+const search = ref("");
+const submittedSearch = ref("");
+const { data, error } = useSWRV(
+  () =>
+    `http://localhost:3030/tutorials${
+      submittedSearch.value ? `?title=${submittedSearch.value}` : ""
+    }`
+);
+const handleSearch = () => {
+  console.log(search.value);
+  submittedSearch.value = search.value;
+};
 </script>
 
 <template>
   <div class="TutorialsPage">
-    <h1>This is an about page</h1>
-    <Button label="Submit" type="primary" />
+    <SearchBar v-model="search" @submit="handleSearch" />
     <div v-if="error">failed to load</div>
     <div v-if="!data">loading...</div>
     <div v-else>
-      <div class="content">
+      <div v-if="data.length" class="content">
         <Card class="tutorials" title="Tutoriales">
           <LinkList
             :items="
@@ -32,6 +44,8 @@ const { data, error } = useSWRV("http://localhost:3030/tutorials");
 
 <style scoped lang="scss">
 .TutorialsPage {
+  padding: 2rem 0 0;
+
   .content {
     display: flex;
 

@@ -3,7 +3,9 @@ import Card from "@/components/Card.vue";
 import { useRoute } from "vue-router";
 import useSWRV from "swrv";
 const route = useRoute();
-const { data } = useSWRV(`http://localhost:3030/tutorials/${route.params.id}`);
+const { data, error } = useSWRV(
+  `http://localhost:3030/tutorials/${route.params.id}`
+);
 </script>
 
 <template>

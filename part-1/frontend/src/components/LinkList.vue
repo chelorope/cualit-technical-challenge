@@ -33,6 +33,7 @@ defineProps({
     cursor: pointer;
     color: var(--color-text);
     border-bottom: var(--border);
+    transition: background-color 0.2s, color 0.2s;
 
     &:last-child {
       border: none;
