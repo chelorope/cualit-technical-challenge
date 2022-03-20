@@ -1,5 +1,14 @@
-<script setup></script>
+<script setup>
+import Card from "@/components/Card.vue";
+import { useRoute } from "vue-router";
+import useSWRV from "swrv";
+const route = useRoute();
+const { data } = useSWRV(`http://localhost:3030/tutorials/${route.params.id}`);
+</script>
 
 <template>
-  <h1>This is a tutorial page</h1>
+  <Card class="tutorial" title="Tutorial">
+    <div v-if="error">Error cargando datos!</div>
+    <div v-if="data">{{ data.title }}</div>
+  </Card>
 </template>

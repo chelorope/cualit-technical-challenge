@@ -5,13 +5,13 @@ import NavBar from "@/components/NavBar.vue";
 
 <template>
   <NavBar />
-  <RouterView class="view" />
+  <RouterView class="MainView" />
 </template>
 
 <style lang="scss">
 @import "@/assets/base.scss";
 
-.view {
+.MainView {
   max-width: 40rem;
   margin: auto;
 }
