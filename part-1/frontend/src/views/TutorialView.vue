@@ -1,16 +1,16 @@
 <script setup>
-import Card from "@/components/Card.vue";
+import { useRoute, useRouter } from "vue-router";
+import useSWRV from "../util/customSwr";
+
 import Button from "@/components/Button.vue";
-import { useRoute } from "vue-router";
-import useSWRV from "swrv";
+
 const route = useRoute();
-const { data, error } = useSWRV(
-  `http://localhost:3030/tutorials/${route.params.id}`
-);
+const router = useRouter();
+const { data, error } = useSWRV(() => `/tutorials/${route.params.id}`);
 </script>
 
 <template>
-  <Card class="Tutorial" title="Tutorial">
+  <div class="Tutorial">
     <div v-if="error">Error cargando datos!</div>
     <div v-if="data">
       <div class="property">
@@ -25,9 +25,17 @@ const { data, error } = useSWRV(
         <span class="name">Estado: </span>
         <span>{{ data.published ? "Publicado" : "Oculto" }}</span>
       </div>
-      <Button type="tertiary" label="Editar" />
+      <Button
+        theme="tertiary"
+        label="Editar"
+        @click="
+          () => {
+            router.push(`/tutoriales/${data.id}/editar`);
+          }
+        "
+      />
     </div>
-  </Card>
+  </div>
 </template>
 
 <style scoped lang="scss">

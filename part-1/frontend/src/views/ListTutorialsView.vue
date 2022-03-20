@@ -1,15 +1,17 @@
 <script setup>
 import { ref } from "vue";
+import { RouterView } from "vue-router";
+import useSWRV from "../util/customSwr";
+
 import Card from "@/components/Card.vue";
 import LinkList from "@/components/LinkList.vue";
 import SearchBar from "@/components/SearchBar.vue";
-import useSWRV from "swrv";
 
 const search = ref("");
 const submittedSearch = ref("");
 const { data, error } = useSWRV(
   () =>
-    `http://localhost:3030/tutorials${
+    `/tutorials${
       submittedSearch.value ? `?title=${submittedSearch.value}` : ""
     }`
 );
@@ -40,7 +42,9 @@ const handleSearch = () => {
             "
           />
         </Card>
-        <RouterView class="tutorial-details" />
+        <Card class="tutorial-details" title="Tutorial">
+          <RouterView />
+        </Card>
       </div>
     </div>
   </div>

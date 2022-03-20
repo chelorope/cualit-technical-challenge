@@ -31,7 +31,7 @@ defineProps({
   }
 
   &.border {
-    padding: 0.6rem 0.8rem;
+    padding: 0.6rem 0.8rem 0.8rem;
     border: var(--border);
     box-shadow: var(--shadow);
   }

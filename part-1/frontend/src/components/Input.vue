@@ -1,5 +1,5 @@
 <script setup>
-defineProps(["name", "modelValue", "label"]);
+defineProps(["name", "modelValue", "label", "required"]);
 defineEmits(["update:modelValue"]);
 </script>
 
@@ -13,6 +13,7 @@ defineEmits(["update:modelValue"]);
       :id="name"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value.trim())"
+      :required="required"
     />
   </label>
 </template>
@@ -20,6 +21,8 @@ defineEmits(["update:modelValue"]);
 <style scoped lang="scss">
 .Input {
   width: 100%;
+  display: block;
+
   .input-elem {
     width: inherit;
     padding: 0.5rem 0.7rem;

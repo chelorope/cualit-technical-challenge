@@ -4,7 +4,7 @@ defineProps({
     type: String,
     required: true,
   },
-  type: {
+  theme: {
     type: String,
     default: "primary",
     validator: (value) => ["primary", "secondary", "tertiary"].includes(value),
@@ -16,13 +16,13 @@ defineProps({
 </script>
 
 <template>
-  <button class="Button" :class="[type, { invert }]">
+  <button class="Button" :class="[theme, { invert }]">
     {{ label }}
   </button>
 </template>
 
 <style scoped lang="scss">
-@mixin button-type($background, $color, $border, $background-h, $color-h) {
+@mixin button-theme($background, $color, $border, $background-h, $color-h) {
   background-color: var($background);
   color: var($color);
   border-color: var($border);
@@ -50,7 +50,7 @@ defineProps({
   transition: background-color 0.2s, color 0.2s;
 
   &.primary {
-    @include button-type(
+    @include button-theme(
       --color-button-primary,
       --color-text-invert,
       --color-button-primary,
@@ -60,7 +60,7 @@ defineProps({
   }
 
   &.secondary {
-    @include button-type(
+    @include button-theme(
       --color-button-secondary,
       --color-text-invert,
       --color-button-secondary,
@@ -70,7 +70,7 @@ defineProps({
   }
 
   &.tertiary {
-    @include button-type(
+    @include button-theme(
       --color-button-tertiary,
       --color-text-invert,
       --color-button-tertiary,

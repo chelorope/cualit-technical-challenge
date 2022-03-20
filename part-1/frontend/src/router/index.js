@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import TutorialsView from "../views/ListTutorialsView.vue";
+import ListTutorialsView from "../views/ListTutorialsView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,7 +11,7 @@ const router = createRouter({
     {
       path: "/tutoriales",
       name: "tutorials",
-      component: TutorialsView,
+      component: ListTutorialsView,
       children: [
         {
           path: ":id",
@@ -19,6 +19,11 @@ const router = createRouter({
           component: () => import("../views/TutorialView.vue"),
         },
       ],
+    },
+    {
+      path: "/tutoriales/:id/editar",
+      name: "edit",
+      component: () => import("../views/EditTutorialView.vue"),
     },
     {
       path: "/tutoriales/crear",
