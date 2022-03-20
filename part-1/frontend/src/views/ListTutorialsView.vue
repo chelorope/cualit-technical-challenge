@@ -21,7 +21,11 @@ const handleSearch = () => {
 
 <template>
   <div class="TutorialsPage">
-    <SearchBar v-model="search" @submit="handleSearch" />
+    <SearchBar
+      v-model="search"
+      @submit="handleSearch"
+      @keyup.enter="handleSearch"
+    />
     <div v-if="error">failed to load</div>
     <div v-if="!data">loading...</div>
     <div v-else>
@@ -51,7 +55,7 @@ const handleSearch = () => {
 
     .tutorials {
       flex: 1;
-      margin-right: 0.8rem;
+      margin-right: 1rem;
     }
 
     .tutorial-details {
