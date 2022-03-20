@@ -1,5 +1,15 @@
 <script setup>
-defineProps(["label", "type"]);
+defineProps({
+  label: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+    default: "primary",
+    validator: (value) => ["primary", "secondary", "tertiary"].includes(value),
+  },
+});
 </script>
 
 <template>
@@ -14,7 +24,7 @@ defineProps(["label", "type"]);
   padding: 0.4rem 0.6rem;
   color: var(--color-text-invert);
   border: none;
-  border-radius: 0.2rem;
+  border-radius: var(--border-radius);
   cursor: pointer;
 
   &.secondary {

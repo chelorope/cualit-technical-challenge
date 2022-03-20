@@ -2,8 +2,9 @@
 :root {
   --color-white: #ffffff;
   --color-black: #000000;
-  --color-gray-00: #fafafa;
+  --color-gray-00: #f9f9f9;
   --color-gray-01: #e7e7e7;
+  --color-gray-02: #eeeeee;
   --color-gray-10: #9c9c9c;
   --color-gray-20: #8e8e8e;
   --color-gray-30: #252525;
@@ -28,8 +29,13 @@
   --color-button-tertiary: var(--color-yellow);
   --color-button-danger: var(--color-red);
   --color-border: var(--color-gray-01);
+  --color-shadow: var(--color-gray-02);
 
   --section-gap: 160px;
+
+  --shadow: var(--color-shadow) -0.1rem 0.1rem 0.2rem;
+  --border: 1px solid var(--color-border);
+  --border-radius: 0.2rem;
 }
 
 /* dark theme semantic colors variables */
@@ -83,4 +89,6 @@ p {
 h1,
 h2 {
   color: var(--color-text-bold);
+  font-size: 1.1rem;
+  font-weight: bold;
 }
