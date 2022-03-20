@@ -8,11 +8,14 @@ defineProps({
     default: "complex",
     validator: (value) => ["simple", "complex"].includes(value),
   },
+  border: {
+    type: Boolean,
+  },
 });
 </script>
 
 <template>
-  <div class="Card" :class="type">
+  <div class="Card" :class="[type, { border }]">
     <h1 class="title">{{ title }}</h1>
     <slot />
   </div>
@@ -20,14 +23,17 @@ defineProps({
 
 <style scoped lang="scss">
 .Card {
-  padding: 0.6rem 0.8rem;
-  border: var(--border);
-  box-shadow: var(--shadow);
   border-radius: var(--border-radius);
 
   .title {
     padding: 0 0 0.4rem;
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.6rem;
+  }
+
+  &.border {
+    padding: 0.6rem 0.8rem;
+    border: var(--border);
+    box-shadow: var(--shadow);
   }
 
   &.simple {
@@ -37,7 +43,9 @@ defineProps({
   }
 
   &.complex {
-    background-color: var(--color-backgroud-secondary);
+    &.border {
+      background-color: var(--color-backgroud-secondary);
+    }
 
     .title {
       border-bottom: var(--border);
