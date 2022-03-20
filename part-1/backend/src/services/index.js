@@ -1,3 +1,5 @@
-// eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
+  const sequelizeClient = app.get("sequelizeClient");
+
+  app.use("/tutorials", require("./tutorial")(sequelizeClient.models.tutorial));
 };
