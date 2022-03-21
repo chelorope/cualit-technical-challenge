@@ -47,9 +47,13 @@
     "feathers-sequelize": "^6.3.2",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
+    "jsrsasign": "^10.5.13",
     "mysql2": "^2.3.0",
     "sequelize": "^6.17.0",
     "serve-favicon": "^2.5.0",
     "winston": "^3.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

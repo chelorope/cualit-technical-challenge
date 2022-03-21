@@ -1,6 +1,5 @@
-import jwt from "jasonwebtoken";
-
-const { VITE_API_DOMAIN, VITE_TOKEN } = import.meta.env;
+const { VITE_API_DOMAIN } = import.meta.env;
+const BASE_DOMAIN = VITE_API_DOMAIN || "";
 
 const formUrlEncode = (fields) => {
   let formBody = [];
@@ -12,11 +11,17 @@ const formUrlEncode = (fields) => {
   return formBody.join("&");
 };
 
+const getAuthenticationHeader = async () => {
+  const token = await (await fetch(`${BASE_DOMAIN}/token`)).json();
+  return { "authentication-token": await token };
+};
+
 export const createTutorial = async ({ video, ...data }) => {
-  const response = await fetch(`${VITE_API_DOMAIN}/tutorials`, {
+  const response = await fetch(`${BASE_DOMAIN}/tutorials`, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      ...(await getAuthenticationHeader()),
     },
     body: formUrlEncode({ video_url: video, ...data }),
   });
@@ -24,10 +29,11 @@ export const createTutorial = async ({ video, ...data }) => {
 };
 
 export const updateTutorial = async ({ id, video, ...data }) => {
-  const response = await fetch(`${VITE_API_DOMAIN}/tutorials/${id}`, {
+  const response = await fetch(`${BASE_DOMAIN}/tutorials/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      ...(await getAuthenticationHeader()),
     },
     body: formUrlEncode({ video_url: video, ...data }),
   });
@@ -35,14 +41,15 @@ export const updateTutorial = async ({ id, video, ...data }) => {
 };
 
 export const removeTutorial = async (id) => {
-  const response = await fetch(`${VITE_API_DOMAIN}/tutorials/${id}`, {
+  const response = await fetch(`${BASE_DOMAIN}/tutorials/${id}`, {
     method: "DELETE",
   });
   return response.json();
 };
 
 export const removeAllTutorials = async () => {
-  const response = await fetch(`${VITE_API_DOMAIN}/tutorials`, {
+  const response = await fetch(`${BASE_DOMAIN}/tutorials`, {
+    headers: await getAuthenticationHeader(),
     method: "DELETE",
   });
   return response.json();

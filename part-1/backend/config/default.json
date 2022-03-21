@@ -14,5 +14,6 @@
     "database": "cualit",
     "dialect": "mysql",
     "logging": false
-  }
+  },
+  "token": "XU91XMHjx4fa9FkWVaOQVpaUkcTqu7ai5ulJZy3Rh9l4uhOWs4O9M3sQfSOytF"
 }

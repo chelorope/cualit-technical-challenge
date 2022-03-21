@@ -8,7 +8,6 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "jsonwebtoken": "^8.5.1",
     "swrv": "^1.0.0-beta.8",
     "vue": "^3.2.31",
     "vue-router": "^4.0.12"
