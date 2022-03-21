@@ -10,8 +10,8 @@ defineProps({
 <template>
   <div class="LinkList">
     <RouterLink
-      class="item"
       v-for="(item, index) in items"
+      :class="['item', { selected: item.selected }]"
       :key="index"
       :to="item.link"
     >
@@ -37,6 +37,10 @@ defineProps({
 
     &:last-child {
       border: none;
+    }
+
+    &.router-link-exact-active {
+      color: var(--color-purple);
     }
 
     &:hover {

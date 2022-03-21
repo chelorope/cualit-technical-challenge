@@ -1,7 +1,7 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
 import useSWRV from "../util/customSwr";
-import { updateTutorial } from "../services/tutorials";
+import { updateTutorial, removeTutorial } from "../services/tutorials";
 
 import TutorialEditCard from "@/components/TutorialEditCard.vue";
 
@@ -12,21 +12,32 @@ const { data } = useSWRV(() =>
 );
 
 const handleSubmit = async (event) => {
-  const resp = await updateTutorial({
-    id: data.value.id,
-    ...event,
-  });
-  console.log(resp);
-  router.push(`/tutoriales/${resp.id}`);
+  if (confirm("Desea guardar los cambios?")) {
+    const resp = await updateTutorial({
+      id: data.value.id,
+      ...event,
+    });
+    router.push(`/tutoriales/${resp.id}`);
+  }
+};
+
+const handleRemove = async () => {
+  if (confirm(`Desea eliminar el tutorial "${data.value.title}"`)) {
+    await removeTutorial(data.value.id);
+    router.push(`/tutoriales`);
+  }
 };
 </script>
 
 <template>
   <TutorialEditCard
+    cardTitle="Edit Tutorial"
     v-if="data"
     class="TutorialEditView"
     v-bind="{ video: data.video_url, ...data }"
     @submit="handleSubmit"
+    @remove="handleRemove"
+    showRemove
   />
 </template>
 

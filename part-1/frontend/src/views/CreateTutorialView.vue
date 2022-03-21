@@ -1,32 +1,47 @@
 <script setup>
-import { useRouter } from "vue-router";
+import { ref } from "vue";
 import { createTutorial } from "../services/tutorials";
 
 import TutorialEditCard from "@/components/TutorialEditCard.vue";
+import Card from "@/components/Card.vue";
+import Button from "@/components/Button.vue";
 
-const router = useRouter();
+const submited = ref(false);
 
 const handleSubmit = async (event) => {
   const resp = await createTutorial(event);
   console.log(resp);
-  router.push(`/tutoriales/${resp.id}`);
+  submited.value = true;
 };
 </script>
 
 <template>
-  <TutorialEditCard class="TutorialEditView" @submit="handleSubmit" />
+  <TutorialEditCard
+    v-if="!submited"
+    cardTitle="Crear Tutorial"
+    class="TutorialEditView"
+    @submit="handleSubmit"
+  />
+  <Card
+    v-else
+    title="El tutorial se agregó correctamente"
+    class="success"
+    type="simple"
+    border
+  >
+    <Button
+      label="Agregar otro tutorial"
+      theme="secondary"
+      @click="submited = false"
+    />
+  </Card>
 </template>
 
 <style scoped lang="scss">
-.TutorialEditView {
-  .property {
-    margin-bottom: 0.8rem;
-    font-size: 0.9rem;
-
-    .name {
-      font-weight: 500;
-      color: var(--color-text-bold);
-    }
-  }
+.TutorialEditCard {
+}
+.success {
+  margin-top: 2rem;
+  text-align: center;
 }
 </style>

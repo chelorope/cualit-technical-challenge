@@ -7,31 +7,48 @@ defineEmits(["update:modelValue", "submit"]);
 
 <template>
   <div class="SearchBar">
-    <Input
-      class="input"
-      :modelValue="modelValue"
-      @update:modelValue="$emit('update:modelValue', $event)"
-    />
+    <div class="search">
+      <Input
+        class="input"
+        :modelValue="modelValue"
+        @update:modelValue="$emit('update:modelValue', $event)"
+      />
+      <Button class="submit" label="Buscar" invert @click="$emit('submit')" />
+    </div>
     <Button
-      class="submit-button"
-      label="Buscar"
+      v-if="modelValue"
+      class="clear"
+      label="Limpiar Búsqueda"
+      theme="danger"
       invert
-      @click="$emit('submit')"
+      @click="
+        () => {
+          $emit('update:modelValue', '');
+          $emit('submit');
+        }
+      "
     />
   </div>
 </template>
 
 <style scoped lang="scss">
 .SearchBar {
-  display: flex;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
 
-  .input {
-    border-radius: var(--border-radius) 0 0 var(--border-radius);
+  .search {
+    display: flex;
+    .input {
+      border-radius: var(--border-radius) 0 0 var(--border-radius);
+    }
+
+    .submit {
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    }
   }
 
-  .submit-button {
-    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  .clear {
+    position: absolute;
+    margin-top: 0.4rem;
   }
 }
 </style>

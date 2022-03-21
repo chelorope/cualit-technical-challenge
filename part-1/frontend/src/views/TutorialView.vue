@@ -1,5 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
+import { computed } from "vue";
 import useSWRV from "../util/customSwr";
 
 import Button from "@/components/Button.vue";
@@ -9,34 +10,42 @@ const router = useRouter();
 const { data, error } = useSWRV(() =>
   route.params.id ? `/tutorials/${route.params.id}` : undefined
 );
+
+const properties = computed(() =>
+  data.value
+    ? [
+        { label: "Titulo", value: data.value.title },
+        {
+          label: "Descripción",
+          value: data.value.description ? data.value.description : "-",
+        },
+        {
+          label: "Video Url",
+          value: data.value.video_url ? data.value.video_url : "-",
+        },
+        {
+          label: "Estado",
+          value: data.value.published ? "Publicado" : "Oculto",
+        },
+      ]
+    : []
+);
 </script>
 
 <template>
   <div class="Tutorial">
     <div v-if="error">Error cargando datos!</div>
     <div v-if="data">
-      <div class="property">
-        <span class="name">Titulo: </span>
-        <span>{{ data.title }}</span>
-      </div>
-      <div class="property">
-        <span class="name">Descripción: </span>
-        <span>{{ data.description ? data.description : "-" }}</span>
-      </div>
-      <div class="property">
-        <span class="name">Video Url: </span>
-        <span>{{ data.video_url ? data.video_url : "-" }}</span>
-      </div>
-      <div class="property">
-        <span class="name">Estado: </span>
-        <span>{{ data.published ? "Publicado" : "Oculto" }}</span>
+      <div v-for="(prop, index) in properties" :key="index" class="property">
+        <span class="name">{{ prop.label }}: </span>
+        <span>{{ prop.value }}</span>
       </div>
       <Button
         theme="tertiary"
         label="Editar"
         @click="
           () => {
-            router.push(`/tutoriales/${data.id}/editar`);
+            router.push(`${TUTORIALS_PATH}/${data.id}/editar`);
           }
         "
       />

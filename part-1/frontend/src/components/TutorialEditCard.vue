@@ -6,8 +6,15 @@ import Input from "@/components/Input.vue";
 import Radio from "@/components/Radio.vue";
 import Button from "@/components/Button.vue";
 
-const props = defineProps(["title", "description", "video", "published"]);
-const emit = defineEmits(["submit"]);
+const props = defineProps({
+  cardTitle: String,
+  title: String,
+  description: { default: "" },
+  video: { default: "" },
+  published: Boolean,
+  showRemove: Boolean,
+});
+const emit = defineEmits(["submit", "remove"]);
 
 const state = reactive({
   title: props.title,
@@ -22,7 +29,7 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <Card class="TutorialEditCard" title="Edit Tutorial" border>
+  <Card class="TutorialEditCard" :title="cardTitle" border>
     <form @submit.prevent="handleSubmit">
       <Input class="input" label="Titulo" v-model="state.title" required />
       <Input class="input" label="Descripcion" v-model="state.description" />
@@ -38,7 +45,17 @@ const handleSubmit = () => {
         v-model="state.published"
         required
       />
-      <Button label="Guardar" type="submit" />
+      <div class="buttons">
+        <Button label="Guardar" type="submit" />
+        <Button
+          v-if="showRemove"
+          class="remove"
+          label="Eliminar"
+          theme="danger"
+          invert
+          @click="$emit('remove')"
+        />
+      </div>
     </form>
   </Card>
 </template>
@@ -53,6 +70,11 @@ const handleSubmit = () => {
 
   .radio {
     margin-bottom: 1.3rem;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>

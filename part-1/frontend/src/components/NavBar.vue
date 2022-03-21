@@ -24,6 +24,10 @@ import { RouterLink } from "vue-router";
   .link {
     font-size: 0.8rem;
     margin: 0 0.5rem;
+
+    &.router-link-active {
+      color: var(--color-green);
+    }
   }
 }
 </style>

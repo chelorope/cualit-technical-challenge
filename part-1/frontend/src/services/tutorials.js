@@ -10,6 +10,17 @@ const formUrlEncode = (fields) => {
   return formBody.join("&");
 };
 
+export const createTutorial = async ({ video, ...data }) => {
+  const response = await fetch(`${VITE_API_DOMAIN}/tutorials`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+    },
+    body: formUrlEncode({ video_url: video, ...data }),
+  });
+  return response.json();
+};
+
 export const updateTutorial = async ({ id, video, ...data }) => {
   const response = await fetch(`${VITE_API_DOMAIN}/tutorials/${id}`, {
     method: "PUT",
@@ -21,13 +32,16 @@ export const updateTutorial = async ({ id, video, ...data }) => {
   return response.json();
 };
 
-export const createTutorial = async ({ video, ...data }) => {
+export const deleteTutorial = async (id) => {
+  const response = await fetch(`${VITE_API_DOMAIN}/tutorials/${id}`, {
+    method: "DELETE",
+  });
+  return response.json();
+};
+
+export const removeAllTutorials = async () => {
   const response = await fetch(`${VITE_API_DOMAIN}/tutorials`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-    },
-    body: formUrlEncode({ video_url: video, ...data }),
+    method: "DELETE",
   });
   return response.json();
 };

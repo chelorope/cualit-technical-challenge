@@ -7,16 +7,18 @@ defineProps({
   theme: {
     type: String,
     default: "primary",
-    validator: (value) => ["primary", "secondary", "tertiary"].includes(value),
+    validator: (value) =>
+      ["primary", "secondary", "tertiary", "danger"].includes(value),
   },
   invert: {
     type: Boolean,
   },
+  type: { default: "button" },
 });
 </script>
 
 <template>
-  <button class="Button" :class="[theme, { invert }]">
+  <button class="Button" :type="type" :class="[theme, { invert }]">
     {{ label }}
   </button>
 </template>
@@ -76,6 +78,16 @@ defineProps({
       --color-button-tertiary,
       --color-transparent,
       --color-button-tertiary
+    );
+  }
+
+  &.danger {
+    @include button-theme(
+      --color-button-danger,
+      --color-text-invert,
+      --color-button-danger,
+      --color-transparent,
+      --color-button-danger
     );
   }
 }
