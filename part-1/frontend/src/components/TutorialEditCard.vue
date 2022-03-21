@@ -11,7 +11,7 @@ const props = defineProps({
   title: String,
   description: { default: "" },
   video: { default: "" },
-  published: Boolean,
+  published: [Boolean, Number],
   showRemove: Boolean,
 });
 const emit = defineEmits(["submit", "remove"]);

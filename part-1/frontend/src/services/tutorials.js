@@ -1,4 +1,6 @@
-const { VITE_API_DOMAIN } = import.meta.env;
+import jwt from "jasonwebtoken";
+
+const { VITE_API_DOMAIN, VITE_TOKEN } = import.meta.env;
 
 const formUrlEncode = (fields) => {
   let formBody = [];
@@ -32,7 +34,7 @@ export const updateTutorial = async ({ id, video, ...data }) => {
   return response.json();
 };
 
-export const deleteTutorial = async (id) => {
+export const removeTutorial = async (id) => {
   const response = await fetch(`${VITE_API_DOMAIN}/tutorials/${id}`, {
     method: "DELETE",
   });

@@ -2,6 +2,7 @@
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
 import useSWRV from "../util/customSwr";
+import { GET_TUTORIALS_EDIT_FULL_PATH } from "../router/paths";
 
 import Button from "@/components/Button.vue";
 
@@ -45,7 +46,7 @@ const properties = computed(() =>
         label="Editar"
         @click="
           () => {
-            router.push(`${TUTORIALS_PATH}/${data.id}/editar`);
+            router.push(GET_TUTORIALS_EDIT_FULL_PATH(data.id));
           }
         "
       />

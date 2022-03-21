@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { RouterView, useRoute, RouterLink } from "vue-router";
 import useSWRV from "../util/customSwr";
 import { removeAllTutorials } from "../services/tutorials";
+import { TUTORIALS_CREATE_FULL_PATH } from "../router/paths";
 
 import Card from "@/components/Card.vue";
 import LinkList from "@/components/LinkList.vue";
@@ -21,7 +22,6 @@ const { data, error, mutate } = useSWRV(
 );
 
 const handleSearch = () => {
-  console.log(search.value);
   submittedSearch.value = search.value;
 };
 
@@ -97,7 +97,9 @@ const handleRemoveAll = async () => {
       border
     >
       Comencemos por
-      <RouterLink class="link" to="/tutoriales/crear">agregar</RouterLink>
+      <RouterLink class="link" :to="TUTORIALS_CREATE_FULL_PATH"
+        >agregar</RouterLink
+      >
       uno
     </Card>
   </div>

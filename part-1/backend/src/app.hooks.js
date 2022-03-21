@@ -1,14 +1,14 @@
-// Application hooks that run for every service
-
+const errorHandler = require("./hooks/errorHandler");
+const verifyJWT = require("./hooks/verifyJWT");
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
-    update: [],
+    create: [verifyJWT()],
+    update: [verifyJWT()],
     patch: [],
-    remove: []
+    remove: [verifyJWT()],
   },
 
   after: {
@@ -18,16 +18,16 @@ module.exports = {
     create: [],
     update: [],
     patch: [],
-    remove: []
+    remove: [],
   },
 
   error: {
-    all: [],
+    // all: [errorHandler()],
     find: [],
     get: [],
     create: [],
     update: [],
     patch: [],
-    remove: []
-  }
+    remove: [],
+  },
 };

@@ -9,8 +9,7 @@ import Button from "@/components/Button.vue";
 const submited = ref(false);
 
 const handleSubmit = async (event) => {
-  const resp = await createTutorial(event);
-  console.log(resp);
+  await createTutorial(event);
   submited.value = true;
 };
 </script>

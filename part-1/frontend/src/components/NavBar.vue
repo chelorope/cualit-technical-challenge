@@ -1,12 +1,15 @@
 <script setup>
 import { RouterLink } from "vue-router";
+import { TUTORIALS_PATH, TUTORIALS_CREATE_FULL_PATH } from "../router/paths";
 </script>
 
 <template>
   <header class="NavBar">
     <RouterLink to="/" class="logo">Tutos.com</RouterLink>
-    <RouterLink to="/tutoriales" class="link">Tutoriales</RouterLink>
-    <RouterLink to="/tutoriales/crear" class="link">Agregar</RouterLink>
+    <RouterLink :to="TUTORIALS_PATH" class="link">Tutoriales</RouterLink>
+    <RouterLink :to="TUTORIALS_CREATE_FULL_PATH" class="link"
+      >Agregar</RouterLink
+    >
   </header>
 </template>
 

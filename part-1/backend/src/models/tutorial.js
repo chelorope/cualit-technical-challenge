@@ -24,6 +24,7 @@ const Tutorial = (sequelize) =>
     },
     {
       freezeTableName: true,
+      paranoid: true,
     }
   );
 
