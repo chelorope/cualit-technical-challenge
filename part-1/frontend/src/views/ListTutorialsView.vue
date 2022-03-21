@@ -16,8 +16,8 @@ const submittedSearch = ref("");
 
 const { data, error, mutate } = useSWRV(
   () =>
-    `/tutorials?${
-      submittedSearch.value ? `?title=${submittedSearch.value}` : ""
+    `/tutorials${
+      submittedSearch.value ? `?search=${submittedSearch.value}` : ""
     }`
 );
 

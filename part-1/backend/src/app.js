@@ -3,6 +3,7 @@ const favicon = require("serve-favicon");
 const compress = require("compression");
 const helmet = require("helmet");
 const cors = require("cors");
+
 const logger = require("./logger");
 
 const feathers = require("@feathersjs/feathers");
@@ -31,8 +32,8 @@ app.use(compress());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(favicon(path.join(app.get("public"), "favicon.ico")));
-// Host the public folder
-app.use("/", express.static(app.get("public")));
+console.log(path.join(app.get("public"), "assets"));
+app.use("/assets", express.static(path.join(app.get("public"), "assets")));
 
 // Set up Plugins and providers
 app.configure(express.rest());
@@ -45,6 +46,11 @@ app.configure(middleware);
 app.configure(models);
 // Set up services
 app.configure(services);
+
+// Host the public folder
+app.get("*", (req, resp) => {
+  resp.sendFile(path.join(app.get("public"), "index.html"));
+}); //express.static(path.join(app.get("public"), "/index.html")));
 
 // Configure a middleware for 404s and the error handler
 app.use(express.notFound());
