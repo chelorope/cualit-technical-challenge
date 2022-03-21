@@ -6,7 +6,9 @@ import Button from "@/components/Button.vue";
 
 const route = useRoute();
 const router = useRouter();
-const { data, error } = useSWRV(() => `/tutorials/${route.params.id}`);
+const { data, error } = useSWRV(() =>
+  route.params.id ? `/tutorials/${route.params.id}` : undefined
+);
 </script>
 
 <template>
@@ -20,6 +22,10 @@ const { data, error } = useSWRV(() => `/tutorials/${route.params.id}`);
       <div class="property">
         <span class="name">Descripción: </span>
         <span>{{ data.description ? data.description : "-" }}</span>
+      </div>
+      <div class="property">
+        <span class="name">Video Url: </span>
+        <span>{{ data.video_url ? data.video_url : "-" }}</span>
       </div>
       <div class="property">
         <span class="name">Estado: </span>

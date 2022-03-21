@@ -1,5 +1,18 @@
 <script setup>
-defineProps(["name", "modelValue", "label", "required"]);
+defineProps({
+  name: String,
+  modelValue: String,
+  label: String,
+  required: Boolean,
+  type: {
+    type: String,
+    default: "text",
+    validator: (value) =>
+      ["text", "url", "email", "password", "search", "tel", "number"].includes(
+        value
+      ),
+  },
+});
 defineEmits(["update:modelValue"]);
 </script>
 
@@ -8,7 +21,7 @@ defineEmits(["update:modelValue"]);
     <p>{{ label }}</p>
     <input
       class="input-elem"
-      type="text"
+      :type="type"
       :name="name"
       :id="name"
       :value="modelValue"

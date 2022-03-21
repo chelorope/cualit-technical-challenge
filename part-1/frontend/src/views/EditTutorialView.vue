@@ -1,19 +1,33 @@
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import useSWRV from "../util/customSwr";
+import { updateTutorial } from "../services/tutorials";
 
 import TutorialEditCard from "@/components/TutorialEditCard.vue";
 
+const router = useRouter();
 const route = useRoute();
-const { data, error } = useSWRV(() => `/tutorials/${route.params.id}`);
+const { data } = useSWRV(() =>
+  route.params.id ? `/tutorials/${route.params.id}` : undefined
+);
 
-const handleSubmit = (event) => {
-  console.log(event);
+const handleSubmit = async (event) => {
+  const resp = await updateTutorial({
+    id: data.value.id,
+    ...event,
+  });
+  console.log(resp);
+  router.push(`/tutoriales/${resp.id}`);
 };
 </script>
 
 <template>
-  <TutorialEditCard class="TutorialEditView" @submit="handleSubmit" />
+  <TutorialEditCard
+    v-if="data"
+    class="TutorialEditView"
+    v-bind="{ video: data.video_url, ...data }"
+    @submit="handleSubmit"
+  />
 </template>
 
 <style scoped lang="scss">
