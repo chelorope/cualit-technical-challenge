@@ -1,19 +1,20 @@
 # Part 1 - CRUD application
 
-## Full-stack CRUD Application
+### Full-stack CRUD Application
 
-- Install dependencies
+## Install dependencies
 
 ```shell
 npm install
 ```
 
-- Create new db
+## Database
 
-- Update configuration inside `backend/config`
+- Create a new DB
+
+- Update DB config inside `backend/config`
 
 Default DB config:
-
 ```json
 {
   "host": "127.0.0.1",
@@ -26,7 +27,7 @@ Default DB config:
 }
 ```
 
-- Run project
+## Run project
 
 ```shell
 npm start
