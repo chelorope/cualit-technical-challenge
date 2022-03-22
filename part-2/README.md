@@ -2,19 +2,19 @@
 
 ### Vue reactivity system demo
 
-Install dependencies
+## Install dependencies
 
 ```shell
 npm install
 ```
 
-Run project
+## Run project
 
 ```shell
 npm start
 ```
 
-Develop
+## Develop
 
 ```shell
 npm run dev
