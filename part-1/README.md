@@ -1,6 +1,6 @@
 # Part 1 - CRUD application
 
-Full-stack CRUD Application
+### Full-stack CRUD Application
 
 ## Install dependencies
 
