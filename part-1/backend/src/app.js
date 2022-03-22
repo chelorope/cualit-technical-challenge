@@ -32,7 +32,6 @@ app.use(compress());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(favicon(path.join(app.get("public"), "favicon.ico")));
-console.log(path.join(app.get("public"), "assets"));
 app.use("/assets", express.static(path.join(app.get("public"), "assets")));
 
 // Set up Plugins and providers

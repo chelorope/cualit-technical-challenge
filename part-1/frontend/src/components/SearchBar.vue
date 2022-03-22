@@ -10,6 +10,7 @@ defineEmits(["update:modelValue", "submit"]);
     <div class="search">
       <Input
         class="input"
+        placeholder="Buscar por titulo o descripción"
         :modelValue="modelValue"
         @update:modelValue="$emit('update:modelValue', $event)"
       />

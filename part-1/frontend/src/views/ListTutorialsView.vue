@@ -15,7 +15,6 @@ const search = ref("");
 const submittedSearch = ref("");
 
 const handleSearch = () => {
-  console.log();
   submittedSearch.value = search.value;
 };
 

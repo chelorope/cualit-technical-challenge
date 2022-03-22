@@ -3,6 +3,7 @@ defineProps({
   name: String,
   modelValue: String,
   label: String,
+  placeholder: String,
   required: Boolean,
   type: {
     type: String,
@@ -24,6 +25,7 @@ defineEmits(["update:modelValue"]);
       :type="type"
       :name="name"
       :id="name"
+      :placeholder="placeholder"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value.trim())"
       :required="required"

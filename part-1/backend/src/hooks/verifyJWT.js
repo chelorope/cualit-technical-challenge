@@ -17,7 +17,6 @@ module.exports = (options = {}) => {
       }
       return context;
     } catch (err) {
-      console.log(err);
       return Promise.reject(new errors.NotAuthenticated());
     }
     // return Promise.reject(new errors.NotAuthenticated());

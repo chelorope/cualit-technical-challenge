@@ -46,7 +46,7 @@ class Tutorials {
         id,
       },
     });
-    console.log(updated);
+
     return updated
       ? await this.db.findByPk(id)
       : new NotFound("Tutorial not found");
