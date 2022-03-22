@@ -1,67 +1,48 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const titleElem = document.querySelector("#title");
-  const quantityInput = document.querySelector("#input-quant");
-  const priceInput = document.querySelector("#input-price");
-  const totalElem = document.querySelector("#total");
+let activeEffect = null;
+const subscriptions = new WeakMap();
 
-  let activeEffect = null;
-  const subscriptions = new WeakMap();
-
-  function getSubscribersForProperty(target, key) {
-    if (!subscriptions[target]) {
-      subscriptions[target] = new Map();
-    }
-
-    if (!subscriptions[target][key]) {
-      subscriptions[target][key] = new Set();
-    }
-    return subscriptions[target][key];
+function getSubscribersForProperty(target, key) {
+  if (!subscriptions.get(target)) {
+    subscriptions.set(target, new Map());
   }
 
-  function track(target, key) {
-    if (activeEffect) {
-      const effects = getSubscribersForProperty(target, key);
-      effects.add(activeEffect);
-    }
+  if (!subscriptions.get(target).get(key)) {
+    subscriptions.get(target).set(key, new Set());
   }
+  return subscriptions.get(target).get(key);
+}
 
-  function trigger(target, key) {
+function track(target, key) {
+  if (activeEffect) {
     const effects = getSubscribersForProperty(target, key);
-    effects.forEach((effect) => effect());
+    effects.add(activeEffect);
   }
+}
 
-  function whatchEffect(update) {
-    const effect = () => {
-      activeEffect = effect;
-      update();
-      activeEffect = null;
-    };
-    effect();
-  }
+function trigger(target, key) {
+  const effects = getSubscribersForProperty(target, key);
+  effects.forEach((effect) => effect());
+}
 
-  const reactive = (object) => {
-    const handler = {
-      get(target, property, receiver) {
-        track(target, property);
-        console.log(target, property);
-        return Reflect.get(target, property, receiver);
-      },
-      set(target, property, value, receiver) {
-        trigger(target, property);
-        console.log(`${property}: ${value}`);
-        return Reflect.set(target, property, value, receiver);
-      },
-    };
-    return new Proxy(object, handler);
+const reactive = (object) => {
+  const handler = {
+    get(target, key, receiver) {
+      track(target, key);
+      return Reflect.get(target, key, receiver);
+    },
+    set(target, key, value, receiver) {
+      Reflect.set(target, key, value, receiver);
+      trigger(target, key);
+    },
   };
+  return new Proxy(object, handler);
+};
 
-  const state = reactive({ quantity: 0, price: 0 });
-
-  quantityInput.value = state.price;
-
-  priceInput.oninput = (event) => {
-    state.price = event.target.value;
+function whatchEffect(update) {
+  const effect = () => {
+    activeEffect = effect;
+    update();
+    activeEffect = null;
   };
-
-  console.log(person);
-});
+  effect();
+}
