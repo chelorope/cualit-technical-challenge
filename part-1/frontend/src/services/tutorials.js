@@ -43,14 +43,15 @@ export const updateTutorial = async ({ id, video, ...data }) => {
 export const removeTutorial = async (id) => {
   const response = await fetch(`${BASE_DOMAIN}/tutorials/${id}`, {
     method: "DELETE",
+    headers: await getAuthenticationHeader(),
   });
   return response.json();
 };
 
 export const removeAllTutorials = async () => {
   const response = await fetch(`${BASE_DOMAIN}/tutorials`, {
-    headers: await getAuthenticationHeader(),
     method: "DELETE",
+    headers: await getAuthenticationHeader(),
   });
   return response.json();
 };

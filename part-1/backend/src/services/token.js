@@ -6,7 +6,7 @@ class Token {
     this.secret = app.get("token");
   }
 
-  async find(params) {
+  async find() {
     return jwt.sign({ time: Date.now() }, this.secret);
   }
 }

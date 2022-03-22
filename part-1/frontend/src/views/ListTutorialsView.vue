@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from "vue";
 import { RouterView, useRoute, RouterLink } from "vue-router";
-import useSWRV from "../util/customSwr";
 import { removeAllTutorials } from "../services/tutorials";
 import { TUTORIALS_CREATE_FULL_PATH } from "../router/paths";
 
@@ -9,23 +8,18 @@ import Card from "@/components/Card.vue";
 import LinkList from "@/components/LinkList.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import Button from "@/components/Button.vue";
+import Data from "@/components/Data.vue";
 
 const route = useRoute();
 const search = ref("");
 const submittedSearch = ref("");
 
-const { data, error, mutate } = useSWRV(
-  () =>
-    `/tutorials${
-      submittedSearch.value ? `?search=${submittedSearch.value}` : ""
-    }`
-);
-
 const handleSearch = () => {
+  console.log();
   submittedSearch.value = search.value;
 };
 
-const handleRemoveAll = async () => {
+const handleRemoveAll = async (mutate) => {
   if (confirm("Seguro que quieres eliminar todos los tutoriales?")) {
     await removeAllTutorials();
     mutate();
@@ -34,75 +28,80 @@ const handleRemoveAll = async () => {
 </script>
 
 <template>
-  <div class="TutorialsPage">
-    <div v-if="error">failed to load</div>
-    <div v-if="!data">loading...</div>
-    <div v-else-if="data.length">
-      <SearchBar
-        v-model="search"
-        @submit="handleSearch"
-        @keyup.enter="handleSearch"
-      />
-      <div v-if="data.length" class="content">
-        <Card class="tutorials" title="Tutoriales">
-          <LinkList
-            class="links"
-            :items="
-              data.map((item) => ({
-                link: `/tutoriales/${item.id}`,
-                label: item.title,
-                selected: item.id === route?.params?.id,
-              }))
-            "
-          />
-          <Button
-            theme="danger"
-            label="Eliminar todos"
-            :style="{ 'margin-top': '1rem' }"
-            invert
-            @click="handleRemoveAll"
-          />
-        </Card>
-        <Card class="tutorial-details" title="Tutorial">
-          <RouterView />
-        </Card>
+  <Data
+    class="TutorialsPage"
+    :url="`/tutorials${submittedSearch ? `?search=${submittedSearch}` : ''}`"
+  >
+    <template #error> Error loading Tutorials </template>
+    <template #loading>Loading Tutorials....</template>
+    <template #default="{ data, mutate }">
+      <div v-if="data.length">
+        <SearchBar
+          v-model="search"
+          @submit="handleSearch"
+          @keyup.enter="handleSearch"
+        />
+        <div v-if="data.length" class="content">
+          <Card class="tutorials" title="Tutoriales">
+            <LinkList
+              class="links"
+              :items="
+                data.map((item) => ({
+                  link: `/tutoriales/${item.id}`,
+                  label: item.title,
+                  selected: item.id === route?.params?.id,
+                }))
+              "
+            />
+            <Button
+              theme="danger"
+              label="Eliminar todos"
+              :style="{ 'margin-top': '1rem' }"
+              invert
+              @click="handleRemoveAll(mutate)"
+            />
+          </Card>
+          <Card class="tutorial-details" title="Tutorial">
+            <RouterView />
+          </Card>
+        </div>
       </div>
-    </div>
 
-    <Card
-      v-else-if="!data.length && search"
-      class="tutorials-empty"
-      :title="`No se encontraron tutoriales con el titulo &quot;${search}&quot;`"
-      type="simple"
-      border
-    >
-      <p
-        class="link"
-        @click="
-          () => {
-            search = '';
-            handleSearch();
-          }
-        "
+      <Card
+        v-else-if="!data.length && search"
+        class="tutorials-empty"
+        :title="`No se encontraron tutoriales con el titulo &quot;${search}&quot;`"
+        type="simple"
+        border
       >
-        Mostrar todos
-      </p>
-    </Card>
+        <p
+          class="link"
+          @click="
+            () => {
+              search = '';
+              handleSearch();
+            }
+          "
+        >
+          Mostrar todos
+        </p>
+      </Card>
 
-    <Card
-      v-else
-      class="tutorials-empty"
-      title="No hay tutoriales aquí"
-      type="simple"
-      border
-    >
-      Comencemos por
-      <RouterLink class="link" :to="TUTORIALS_CREATE_FULL_PATH"
-        >agregar</RouterLink
+      <Card
+        v-else
+        class="tutorials-empty"
+        title="No hay tutoriales aquí"
+        type="simple"
+        border
       >
-      uno
-    </Card>
-  </div>
+        Comencemos por
+        <RouterLink class="link" :to="TUTORIALS_CREATE_FULL_PATH"
+          >agregar</RouterLink
+        >
+        uno
+      </Card>
+    </template>
+  </Data>
 </template>
 
 <style scoped lang="scss">
