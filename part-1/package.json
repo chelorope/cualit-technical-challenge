@@ -1,0 +1,14 @@
+{
+  "name": "part-1",
+  "version": "1.0.0",
+  "description": "Cualit challenge part-1",
+  "main": "index.js",
+  "scripts": {
+    "install": "cd frontend && npm i && cd ../backend && npm i",
+    "build": "cd frontend && npm run build",
+    "copy": "cp -r frontend/dist/ backend/public",
+    "start": "npm run build && npm run copy && cd backend && npm start"
+  },
+  "author": "",
+  "license": "ISC"
+}
